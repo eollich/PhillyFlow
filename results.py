@@ -1,4 +1,4 @@
-from data_preprocessing import load_and_preprocess_data
+from pre_processing import load_and_preprocess_data
 from model import train_model, evaluate_model
 import pandas as pd
 
