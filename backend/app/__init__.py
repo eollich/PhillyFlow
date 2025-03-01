@@ -40,6 +40,10 @@ def create_app(config_class=Config):
 
     app.register_blueprint(main_bp)
 
+    from app.auth import bp as auth_bp
+
+    app.register_blueprint(auth_bp, url_prefix="/auth")
+
     if not app.debug:
         # log file
         if not os.path.exists("logs"):
