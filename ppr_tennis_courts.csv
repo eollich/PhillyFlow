@@ -1,0 +1,237 @@
+objectid,park_name,court_number,comments,data_source,lat,lng
+475,Franklin Delano Roosevelt Park,5, ,Nearmap 2023,39.90437947386684,-75.17624089437513
+476,Hunting Park,1, ,Nearmap 2023,40.01516849210924,-75.1418922347097
+477,Fisher Park,2, ,2024 October Site Visits,40.043759236632134,-75.13129521373014
+478,Eastwick Regional Playground,3,Renovated in 2021 (share pickleball),Nearmap 2023,39.90476624685699,-75.25057591661117
+479,Wisters Woods Park,0,Operated by Woodford Tennis Courts,Property Team 2024,40.03453072021943,-75.15825295905233
+480,Wissinoming Park,1, ,Nearmap 2023,40.025158835336654,-75.06999680188217
+481,Fernhill Park,2, ,Nearmap 2023,40.02065480732925,-75.16868206300634
+482,Disston Park,2, ,Nearmap 2023,40.01880855312773,-75.04869465109202
+483,Jim Junod Recreation Center,1,Field Lights,2024 September Site Visits,40.10351709803673,-74.96978874777808
+484,Michael Palmer Playground,1, ,2024 September Site Visits,40.094838729966725,-74.98928967639169
+485,J Francis Finnegan Playground,3, ,Nearmap 2023,39.91416330922127,-75.23201201050527
+486,Lawncrest Recreation Center,2, ,Nearmap 2023,40.04646154360046,-75.10111496211742
+487,Joseph F Vogt Playground,1, ,Nearmap 2023,40.02838482964279,-75.04791917174515
+488,Fox Chase Recreation Center,2,Fox Chase School Playground,Nearmap 2023,40.07430594905558,-75.08145694593308
+489,Torresdale Recreation Center,1, ,Nearmap 2023,40.05917605804026,-74.99809459202477
+490,William B Simons Recreation Center,1, ,Nearmap 2023,40.0617342108698,-75.15830611610023
+491,Olney Recreation Center,1, ,Nearmap 2023,40.04227347152486,-75.11641135148024
+492,Charles A Russo Playground,2, ,Nearmap 2023,40.02902209503367,-75.03377733222996
+493,Max Myers Playground,4, ,Nearmap 2023,40.039079807432124,-75.07156765344757
+494,William A Lackman Memorial Playground,1,Renovated April 2023,"Nearmap 2023, Capital 2023",40.10004694316207,-75.0334337289281
+495,George C Pelbano Playground,1,Lights for court exist. No Court Number Sign.,Nearmap 2023,40.06182311968372,-75.05141628995263
+496,Thomas E Jardel Memorial Field,2, ,Nearmap 2023,40.05664881705496,-75.07694115180242
+497,Daniel Boyle Memorial Recreation Center,2,Courts Lit. Pickleball Court Added,GIS Field Inspection 2024,40.1223608475711,-75.00695772961932
+498,Stenton Park,0, ,2024 December Site Visits,40.02383066051233,-75.15266723785193
+499,Water Tower Recreation Center,1, ,Nearmap 2023,40.074921228468654,-75.20043455315087
+500,Pepper School Playground,1, ,Nearmap 2023,39.8962916190227,-75.2490357603412
+501,Elizabeth M Picariello Playground,1,Renovated May 2023,2024 September Site Visits,40.079916738240385,-74.98886575119025
+502,Reyburn Park,1, ,Nearmap 2023,39.99477762997864,-75.1655225174946
+503,Bridesburg Recreation Center,2, ,Nearmap 2023,39.99935392446878,-75.06852269423091
+504,Francis J Myers Recreation Center,1, ,Nearmap 2023,39.933970943308736,-75.22878526541062
+505,Harry S McDevitt Playground,1, ,Nearmap 2023,40.00892153484995,-75.18715677894521
+506,Thomas Mitchell Playground,2, ,Nearmap 2023,40.068567765299036,-74.99192994063337
+507,Charles M Finley Playground,2, ,Nearmap 2023,40.064116025830415,-75.1698124876454
+508,Morris Estate Cultural Center,1, ,Nearmap 2023,40.050293984308965,-75.14683886105722
+509,Frank McArdle Memorial Recreation Center,2, ,Nearmap 2023,40.06076583537321,-75.02733630909029
+510,Boniface Piccoli Playground,2, ,Nearmap 2023,40.012881700332194,-75.09591702177825
+511,Helen G Sturgis Playground,1,Pickleball Court,2024 October Site Visits,40.04952706091218,-75.12435930833887
+512,John L Barrett Playground,2, ,Nearmap 2023,40.02960129817523,-75.13590966786249
+513,A Albert Cherashore Playground,2, ,2024 October Site Visits,40.0378967575583,-75.13726940490116
+514,West Mill Creek Playground,2, ,Nearmap 2023,39.96929306396331,-75.22506156272146
+515,11th and Cecil B Moore Playground,1, ,Nearmap 2023,39.9790568055176,-75.15109324891071
+516,Waterview Recreation Center,1, ,Nearmap 2023,40.04511277609977,-75.16796645170774
+517,East Poplar Playground,2,Renovated 2021,Nearmap 2023,39.96736107770583,-75.15110194687308
+518,Pleasant Playground,1, ,Nearmap 2023,40.05688227360515,-75.18297533708098
+519,Happy Hollow Recreation Center,2, ,2024 December Site Visits,40.02321358732214,-75.16645676455991
+520,CCA Baldi School Playground,1, ,Nearmap 2023,40.091766614800456,-75.05099098488219
+521,Wharton Square,1, ,Nearmap 2023,39.93537045947348,-75.1837586045476
+522,Commodore John Barry Playground,1, ,Nearmap 2023,39.916060560045864,-75.17829887916325
+523,Marie Dendy Recreation Center,1, ,Nearmap 2023,39.97507122864997,-75.15126512408622
+524,Albert W Christy Sr Recreation Center,2, ,Nearmap 2023,39.94901670941116,-75.23505917396274
+525,Penrose Memorial Playground,1, ,Nearmap 2023,39.985920024399825,-75.15151964829049
+526,Charles T Mitchell Jr (Seger) Park,1,"2 Pickleball Courts; Building is named for Charles Seger (1977); Site is named for Charles T Mitchell Jr (1976).",Nearmap 2023,39.9435014494788,-75.15905289582645
+527,Hawthorne Cultural Center,0, ,Nearmap 2023,39.93829084046307,-75.16374404756509
+528,Weccacoe Square,0, ,Nearmap 2023,39.9381491082627,-75.15086699444518
+529,Garden Court,1, ,Nearmap 2023,39.95314083875145,-75.21656870993117
+530,Allens Lane Art Center,0, ,Nearmap 2023,40.05143316527263,-75.20262647099095
+531,Kingsessing Recreation Center,1, ,Nearmap 2023,39.942459183604726,-75.21834717870675
+532,Officer Robert Hayes Memorial Playground,2, ,Nearmap 2023,40.09147586816664,-75.02153899220339
+533,John A Lee Cultural Center,0, ,Nearmap 2023,39.96095783004493,-75.21073636769583
+534,Garland and Bingham Fields,0, ,Nearmap 2023,40.033702415153854,-75.11031910510158
+535,Rufus O Williams Memorial Playground,3, ,Nearmap 2023,39.95062796198209,-75.24976231482803
+536,Samuel Rose Recreation Center,1, ,Nearmap 2023,39.97359906667605,-75.26059514688212
+537,Samuel F Houston Playground,2, ,Nearmap 2023,40.0699204378168,-75.23182193721891
+538,Joseph E Mander Playground,10, ,Nearmap 2023,39.99098569080332,-75.18831767962784
+539,William H (Billy) Markward Memorial Playground,1, ,Nearmap 2023,39.94805835199766,-75.18280693660867
+540,Awbury Park and Recreation Center,8, ,Nearmap 2024,40.052845071865534,-75.16376441346316
+541,Parkside Evans Recreation Center,5, ,Nearmap 2023,39.983967547890195,-75.22637164172195
+542,Chamounix Tennis Courts,6, ,Nearmap 2023,39.99930626112559,-75.20141950571053
+543,Franklin Delano Roosevelt Park,13,Pickleball Court,Nearmap 2023,39.89843716925085,-75.18514185859378
+544,William H (Billy) Markward Memorial Playground,0,Quickstart tennis court,Nearmap 2023,39.948399742866116,-75.18316094859848
+545,11th and Cecil B Moore Playground,2, ,Nearmap 2023,39.97903389361437,-75.15092369119463
+546,Allens Lane Art Center,0, ,Nearmap 2023,40.05151615283572,-75.20275674398864
+547,Allens Lane Art Center,0, ,Nearmap 2023,40.05171265243134,-75.20286724569208
+548,Allens Lane Art Center,0, ,Nearmap 2023,40.05143325419709,-75.20316808738069
+549,Awbury Park and Recreation Center,7, ,Nearmap 2023,40.052745760415206,-75.16385350915425
+550,Awbury Park and Recreation Center,9, ,Nearmap 2024,40.05294001997485,-75.16366152438947
+551,Awbury Park and Recreation Center,10, ,Nearmap 2023,40.053035023824336,-75.1635611150265
+552,Awbury Park and Recreation Center,6, ,Nearmap 2023,40.05259733219375,-75.1640269925702
+553,Awbury Park and Recreation Center,5, ,Nearmap 2023,40.05250040121624,-75.164126544304
+554,Awbury Park and Recreation Center,4, ,Nearmap 2023,40.05239902137,-75.16422967717328
+555,Awbury Park and Recreation Center,3,,Nearmap 2023,40.05334292838032,-75.1647852892242
+556,Awbury Park and Recreation Center,2,,Nearmap 2023,40.05321914069873,-75.16492029755823
+557,Awbury Park and Recreation Center,1,,Nearmap 2023,40.05309328059911,-75.16504794031489
+558,CCA Baldi School Playground,2, ,Nearmap 2023,40.09166610982595,-75.0510967993431
+559,John L Barrett Playground,3, ,Nearmap 2023,40.029626670653464,-75.13608173418454
+560,John L Barrett Playground,1, ,Nearmap 2023,40.02958168425047,-75.13573924110474
+561,Commodore John Barry Playground,2, ,Nearmap 2023,39.91608156040775,-75.17846990790464
+562,Commodore John Barry Playground,6, ,Nearmap 2023,39.91623074022205,-75.17864816286995
+563,Commodore John Barry Playground,5, ,Nearmap 2023,39.916136915243314,-75.17867400221884
+564,Daniel Boyle Memorial Recreation Center,1,Courts Lit. Pickleball Court Added,GIS Field Inspection 2024,40.12244201662327,-75.00709232914791
+565,Bridesburg Recreation Center,1, ,Nearmap 2023,39.99946310324728,-75.06860393755085
+566,Chamounix Tennis Courts,5, ,Nearmap 2023,39.999544961748995,-75.20113281368846
+567,Chamounix Tennis Courts,4, ,Nearmap 2023,39.99979341002441,-75.20085567309854
+568,Chamounix Tennis Courts,3, ,Nearmap 2023,40.00004521115972,-75.20060072249298
+569,Chamounix Tennis Courts,2, ,Nearmap 2023,40.00030776671869,-75.20035776464543
+570,Chamounix Tennis Courts,1, ,Nearmap 2023,40.00057405088019,-75.20011094519057
+571,Chamounix Tennis Courts,7, ,Nearmap 2023,39.99900437624067,-75.20182387448139
+572,Chamounix Tennis Courts,8, ,Nearmap 2023,39.99879102359106,-75.20213564765993
+573,Chamounix Tennis Courts,9, ,Nearmap 2023,39.998581893255135,-75.20246585829253
+574,Chamounix Tennis Courts,10, ,Nearmap 2023,39.998391900113496,-75.20279906851138
+575,Chamounix Tennis Courts,11, ,Nearmap 2023,39.998205094131684,-75.20314703548684
+576,Chamounix Tennis Courts,12, ,Nearmap 2023,39.998035684270064,-75.20350550672244
+577,A Albert Cherashore Playground,1, ,2024 October Site Visits,40.037870837027846,-75.1370731471924
+578,Albert W Christy Sr Recreation Center,1, ,Nearmap 2023,39.9488973727294,-75.23507985225841
+579,Disston Park,3, ,Nearmap 2023,40.01875850028584,-75.0485431568314
+580,Disston Park,1, ,Nearmap 2023,40.01886336966381,-75.04884595600006
+581,East Poplar Playground,1,Renovated 2021,Nearmap 2023,39.9673381658078,-75.1509324183385
+582,Eastwick Regional Playground,2,Renovated in 2021 (share pickleball),Nearmap 2023,39.90488771565436,-75.25046156759767
+583,Eastwick Regional Playground,4, ,Nearmap 2023,39.90466342937634,-75.2506710077537
+584,Eastwick Regional Playground,5, ,Nearmap 2023,39.90453100576868,-75.25077492556595
+585,Fernhill Park,1, ,Nearmap 2023,40.02072694698569,-75.16855064111962
+586,Fernhill Park,3, ,Nearmap 2023,40.02058151132176,-75.16881507901918
+587,Charles M Finley Playground,1, ,Nearmap 2023,40.064016284421484,-75.16993573459007
+588,Charles M Finley Playground,3, ,Nearmap 2023,40.064229397109486,-75.16965924694183
+589,Charles M Finley Playground,4, ,Nearmap 2023,40.06432556516212,-75.16953613512568
+590,Fisher Park,1, ,2024 October Site Visits,40.04377723684584,-75.13145736340238
+591,Fisher Park,3, ,2024 October Site Visits,40.043735316491116,-75.13113484360484
+592,Fox Chase Recreation Center,1,Fox Chase School Playground,Nearmap 2023,40.07438558714106,-75.08160121594253
+593,Fox Chase Recreation Center,3,Fox Chase School Playground,Nearmap 2023,40.07422768175163,-75.08132037969715
+594,Franklin Delano Roosevelt Park,14,Pickleball Court,Nearmap 2023,39.898402484148434,-75.18529637439039
+595,Franklin Delano Roosevelt Park,15, ,Nearmap 2023,39.89836779793757,-75.18545089006335
+596,Franklin Delano Roosevelt Park,12, ,Nearmap 2023,39.89846821274305,-75.18498438470105
+597,Franklin Delano Roosevelt Park,11, ,Nearmap 2023,39.89849683934999,-75.18482545418051
+598,Franklin Delano Roosevelt Park,4, ,Nearmap 2023,39.90439474490365,-75.17607161814114
+599,Franklin Delano Roosevelt Park,3, ,Nearmap 2023,39.90441477890298,-75.17590216150789
+600,Franklin Delano Roosevelt Park,2, ,Nearmap 2023,39.904433622497805,-75.17573274866409
+601,Franklin Delano Roosevelt Park,1, ,Nearmap 2023,39.90445365599636,-75.17556329183415
+602,Franklin Delano Roosevelt Park,10, ,Nearmap 2023,39.90409155432063,-75.17584010800844
+603,Franklin Delano Roosevelt Park,9, ,Nearmap 2023,39.9041080157939,-75.17567078730788
+604,Franklin Delano Roosevelt Park,8, ,Nearmap 2023,39.90412811863728,-75.17550442303326
+605,Franklin Delano Roosevelt Park,7, ,Nearmap 2023,39.90414454488126,-75.17533355569451
+606,Franklin Delano Roosevelt Park,6, ,Nearmap 2023,39.904165768817826,-75.17516405436513
+607,Garden Court,2, ,Nearmap 2023,39.95312043981718,-75.21640065362078
+608,Garland and Bingham Fields,0, ,Nearmap 2023,40.033764156744034,-75.1101819107961
+609,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.01253806786336,-75.20336086533293
+610,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.012487738100056,-75.20318758719591
+611,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.01243080100219,-75.20298510507584
+612,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.01238285274289,-75.20281173811303
+613,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.01229028799767,-75.20245402940924
+614,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.01204981893006,-75.20295134541763
+615,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.011997175203405,-75.20278125608091
+616,Gustine Recreation Center,0,Operated by Legacy Youth and Tennis,Property 2024,40.01194922663556,-75.20260789036904
+617,Happy Hollow Recreation Center,1, ,2024 December Site Visits,40.023315108727985,-75.1663598760521
+618,Officer Robert Hayes Memorial Playground,3, ,Nearmap 2023,40.091427076438976,-75.02169305552596
+619,Samuel F Houston Playground,1, ,Nearmap 2023,40.069831702525015,-75.23194996744361
+620,Hunting Park,2, ,Nearmap 2023,40.01514598656549,-75.1417200930312
+621,Hunting Park,3, ,Nearmap 2023,40.01483950397843,-75.14195510241991
+622,Hunting Park,4, ,Nearmap 2023,40.01482284167146,-75.14178831726791
+623,Hunting Park,5, ,Nearmap 2023,40.014513584199406,-75.14202715117865
+624,Hunting Park,6, ,Nearmap 2023,40.01449532447252,-75.14185298832241
+625,J Francis Finnegan Playground,2, ,Nearmap 2023,39.91407503587538,-75.23213910997848
+626,J Francis Finnegan Playground,4, ,Nearmap 2023,39.914246954984925,-75.23189127285795
+627,J Francis Finnegan Playground,5, ,Nearmap 2023,39.914328666693706,-75.23176936862835
+628,J Francis Finnegan Playground,1, ,Nearmap 2023,39.913985646908756,-75.2322588217833
+629,Thomas E Jardel Memorial Field,1, ,Nearmap 2023,40.05654729917102,-75.07703512184875
+630,Thomas E Jardel Memorial Field,3, ,Nearmap 2023,40.05675264470384,-75.0768439878323
+631,Thomas E Jardel Memorial Field,4, ,Nearmap 2023,40.05685535341314,-75.07674997028488
+632,Jim Junod Recreation Center,2,Field Lights,2024 September Site Visits,40.103538950190874,-74.96962764970718
+633,Jim Junod Recreation Center,3,Field Lights,2024 September Site Visits,40.10319135340107,-74.96972635326293
+634,Jim Junod Recreation Center,4,Field Lights,2024 September Site Visits,40.10320745931763,-74.9695642489683
+635,Kingsessing Recreation Center,2, ,Nearmap 2023,39.94237151097521,-75.21847928310152
+636,William A Lackman Memorial Playground,2,Renovated April 2023,"Nearmap 2023, Capital 2023",40.1000861505002,-75.03327693451024
+637,Lawncrest Recreation Center,1, ,Nearmap 2023,40.04638359978834,-75.10096042612172
+638,John A Lee Cultural Center,0, ,Nearmap 2023,39.96091512132058,-75.2105731540011
+639,Joseph E Mander Playground,9, ,Nearmap 2023,39.99086856682514,-75.18819688552178
+640,Joseph E Mander Playground,5, ,Nearmap 2023,39.991194752839924,-75.1879862229023
+641,Joseph E Mander Playground,4, ,Nearmap 2023,39.991077656181126,-75.18786666845942
+642,Joseph E Mander Playground,3, ,Nearmap 2023,39.99096142888219,-75.18774336127767
+643,Joseph E Mander Playground,8, ,Nearmap 2023,39.990755198200006,-75.18807347149202
+644,Joseph E Mander Playground,2, ,Nearmap 2023,39.990846209228444,-75.18762249632627
+645,Joseph E Mander Playground,7, ,Nearmap 2023,39.990639081708885,-75.18795511885236
+646,Joseph E Mander Playground,1, ,Nearmap 2023,39.99072998169249,-75.1874991911529
+647,Joseph E Mander Playground,6, ,Nearmap 2023,39.99052201175669,-75.18783680375793
+648,William H (Billy) Markward Memorial Playground,2, ,Nearmap 2023,39.94792184183223,-75.18283222686637
+649,Max Myers Playground,3, ,Nearmap 2023,40.03899885721689,-75.07141886880993
+650,Max Myers Playground,2, ,Nearmap 2023,40.038916788100785,-75.07127323050582
+651,Max Myers Playground,1, ,Nearmap 2023,40.03883345554042,-75.07112454061071
+652,Frank McArdle Memorial Recreation Center,3, ,Nearmap 2023,40.0608404837869,-75.02746827945971
+653,Frank McArdle Memorial Recreation Center,1, ,Nearmap 2023,40.06069353200081,-75.02720269344947
+654,Harry S McDevitt Playground,2, ,Nearmap 2023,40.008973103342186,-75.18701067632243
+655,Thomas Mitchell Playground,1, ,Nearmap 2023,40.068465014505044,-74.99201945359539
+656,Olney Recreation Center,2, ,Nearmap 2023,40.04225061504455,-75.11624629631086
+657,Michael Palmer Playground,2, ,2024 September Site Visits,40.09491806937373,-74.98916848313111
+658,Michael Palmer Playground,3, ,2024 September Site Visits,40.0950103592048,-74.98899088524915
+659,Michael Palmer Playground,4, ,2024 September Site Visits,40.09510376525872,-74.98885980620898
+660,Parkside Evans Recreation Center,4, ,Nearmap 2023,39.98398551606914,-75.22653831753478
+661,Parkside Evans Recreation Center,6, ,Nearmap 2023,39.98394382194195,-75.22620331999491
+662,Parkside Evans Recreation Center,1, ,Nearmap 2023,39.984339581250914,-75.2264433490623
+663,Parkside Evans Recreation Center,2, ,Nearmap 2023,39.98430303333875,-75.2262773628223
+664,Parkside Evans Recreation Center,3, ,Nearmap 2023,39.98427073226276,-75.22610935896401
+665,Parkside Evans Recreation Center,7, ,Nearmap 2023,39.98362193542747,-75.22659087381497
+666,Parkside Evans Recreation Center,8, ,Nearmap 2023,39.98361250145172,-75.22642202182715
+667,Parkside Evans Recreation Center,9, ,Nearmap 2023,39.98360727256544,-75.2262492948927
+668,Penrose Memorial Playground,2, ,Nearmap 2023,39.98589908905177,-75.15135309700443
+669,Pepper School Playground,2, ,Nearmap 2023,39.896395151451664,-75.24892981911208
+670,Pepper School Playground,3, ,Nearmap 2023,39.89650468392442,-75.24883665623052
+671,Pepper School Playground,4, ,Nearmap 2023,39.89661270661435,-75.24873983463735
+672,Elizabeth M Picariello Playground,2,Renovated May 2023,2024 September Site Visits,40.079998102333604,-74.98873953628569
+673,Boniface Piccoli Playground,1, ,Nearmap 2023,40.012904188604246,-75.09608542538349
+674,Boniface Piccoli Playground,3, ,Nearmap 2023,40.01285648251982,-75.09575430631415
+675,Pleasant Playground,2, ,Nearmap 2023,40.056984357348526,-75.1828709588639
+676,Pleasant Playground,3, ,Nearmap 2023,40.057087786572204,-75.18276280661095
+677,Pleasant Playground,4, ,Nearmap 2023,40.05719987365266,-75.18265804919184
+678,Reyburn Park,2, ,Nearmap 2023,39.99485628806488,-75.16539492275764
+679,Samuel Rose Recreation Center,2, ,Nearmap 2023,39.973516332494206,-75.2604736210169
+680,Rufus O Williams Memorial Playground,1, ,Nearmap 2023,39.95032443911094,-75.25001136305362
+681,Rufus O Williams Memorial Playground,2, ,Nearmap 2023,39.950297768045594,-75.24983765131162
+682,Charles A Russo Playground,3, ,Nearmap 2023,40.02894817881458,-75.0339179841044
+683,Charles A Russo Playground,1, ,Nearmap 2023,40.02908895412126,-75.03364068395686
+684,Charles T Mitchell Jr (Seger) Park,2,"2 Pickleball Courts; Building is named for Charles Seger (1977); Site is named for Charles T Mitchell Jr (1976).",Nearmap 2023,39.94348363496879,-75.15889747740555
+685,William B Simons Recreation Center,2, ,Nearmap 2023,40.06169067111856,-75.15815140992937
+686,William B Simons Recreation Center,3, ,Nearmap 2023,40.06165559402231,-75.15799141570123
+687,William B Simons Recreation Center,4, ,Nearmap 2023,40.06160919559107,-75.15783681913076
+688,William B Simons Recreation Center,5, ,Nearmap 2023,40.06157229617891,-75.15768061795889
+689,William B Simons Recreation Center,6,Tennis Practice Wall,Nearmap 2023,40.061384791122045,-75.15790744555831
+690,William B Simons Recreation Center,7,Tennis Practice Wall,Nearmap 2023,40.06134878919944,-75.15774872813657
+691,Helen G Sturgis Playground,2,Pickleball Court,2024 October Site Visits,40.049512670102004,-75.12418863208097
+692,Helen G Sturgis Playground,3,Pickleball Court,2024 October Site Visits,40.04948398878309,-75.12401850780905
+693,Torresdale Recreation Center,2, ,Nearmap 2023,40.059252132956445,-74.99796615925773
+694,Torresdale Recreation Center,3, ,Nearmap 2023,40.05932213512981,-74.99782307992916
+695,Joseph F Vogt Playground,2, ,Nearmap 2023,40.02827769753137,-75.04782419951862
+696,Water Tower Recreation Center,2, ,Nearmap 2023,40.07483710616968,-75.20029621267231
+697,Water Tower Recreation Center,3, ,Nearmap 2023,40.07476060612109,-75.20015758597249
+698,Water Tower Recreation Center,6, ,Nearmap 2023,40.074568890128205,-75.2005421333578
+699,West Mill Creek Playground,1, ,Nearmap 2023,39.968976277330995,-75.22500889386792
+700,Wharton Square,2, ,Nearmap 2023,39.93534570471208,-75.18358983536464
+701,Wissinoming Park,2, ,Nearmap 2023,40.02512331733905,-75.06982330834367
+702,Wisters Woods Park,0,Operated by Woodford Tennis Courts,Property Team 2024,40.03462635030954,-75.15814882365419
+703,Wisters Woods Park,0,Operated by Woodford Tennis Courts,Property Team 2024,40.03410681600193,-75.1587399357578
+704,Wisters Woods Park,0,Operated by Woodford Tennis Courts,Property Team 2024,40.03420244653535,-75.15863580169595
+705,Wisters Woods Park,0,Operated by Woodford Tennis Courts,Property Team 2024,40.03428276324048,-75.15851860592089
+706,William H (Billy) Markward Memorial Playground,0,Quickstart tennis court,Nearmap 2023,39.94847330659235,-75.18306060201489
+707,East Poplar Playground,0,Renovated 2021. Known as East Poplar Field.,Nearmap 2023,39.968299472218895,-75.15019701043732
+708,Northwood Park,0, ,PPR Archives 2023,40.02395148453797,-75.09119715955357
+709,Northwood Park,0,Pickleball courts as well.,PPR Archives 2023,40.02387362132193,-75.09107538712459
+710,Northwood Park,0, ,PPR Archives 2023,40.02379414078651,-75.09094856373362
