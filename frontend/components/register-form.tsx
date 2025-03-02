@@ -20,6 +20,7 @@ export function RegisterForm({
   const router = useRouter();
 
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -36,7 +37,7 @@ export function RegisterForm({
     setError("");
     setLoading(true);
 
-    const { success, error } = await register(email, password);
+    const { success, error } = await register(email, username, password);
     if (success) {
       toast.success("Registration Success");
       router.push("/login");
@@ -68,6 +69,17 @@ export function RegisterForm({
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                />
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  placeholder="username"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   disabled={loading}
                 />
               </div>

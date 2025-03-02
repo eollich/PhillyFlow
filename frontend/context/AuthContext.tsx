@@ -6,7 +6,7 @@ interface AuthContextType {
   user: any | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (email: string, username: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
 }
 
@@ -20,25 +20,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function checkAuth() {
       try {
-        console.log("Client-Side Cookies:", document.cookie); // ✅ Debugging
 
         const res = await fetch("/api/auth/uinfo", {
           method: "GET",
-          credentials: "include", // ✅ Ensures client sends cookies
+          credentials: "include",
         });
 
-        console.log("Auth Verify Response Status:", res.status);
-        console.log("Auth Verify Response Headers:", [...res.headers.entries()]);
 
         if (res.ok) {
           const data = await res.json();
-          console.log("User Data from /api/auth/verify:", data);
           setUser(data);
         } else {
           setUser(null);
         }
       } catch (error) {
-        console.error("Auth Verify Error:", error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -51,47 +46,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Login function
   async function login(email: string, password: string): Promise<boolean> {
     try {
-      console.log("🔹 [Browser] Current Cookies BEFORE login:", document.cookie); // ✅ Log before request
 
       const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",  // ✅ Ensures cookies are sent and received
-        body: JSON.stringify({ email, password }),
-      });
-
-      console.log("🔹 [Browser] Login Response Status:", res.status);
-      console.log("🔹 [Browser] Login Response Headers:", [...res.headers.entries()]);
-
-      if (res.ok) {
-        const userRes = await fetch("/api/auth/uinfo", {
-          method: "GET",
-          credentials: "include",
-        }); if (userRes.ok) {
-          const userData = await userRes.json();
-          console.log("🔹 User Data from /api/auth/uinfo:", userData);
-          setUser(userData); // ✅ Set the full user info
-          return true;
-        } else {
-          console.error("🔴 Failed to fetch user info after login.");
-          return false;
-        }
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error("🔴 [Browser] Login Error:", error);
-      return false;
-    }
-  }
-
-
-  // Register function
-  async function register(email: string, password: string): Promise<{ success: boolean; error?: string }> {
-    try {
-      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,12 +56,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ email, password }),
       });
 
+
+      if (res.ok) {
+        const userRes = await fetch("/api/auth/uinfo", {
+          method: "GET",
+          credentials: "include",
+        }); if (userRes.ok) {
+          const userData = await userRes.json();
+          setUser(userData);
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
+
+  // Register function
+  async function register(email: string, username: string, password: string): Promise<{ success: boolean; error?: string }> {
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email, username, password }),
+      });
+
       const data = await res.json();
 
       if (res.ok) {
         return { success: true };
       } else {
-        console.log(data);
         return { success: false, error: data.message || "Registration failed" };
       }
     } catch (error) {
@@ -122,7 +110,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       setUser(null);
     } catch (error) {
-      console.error("Logout failed:", error);
     }
   }
 

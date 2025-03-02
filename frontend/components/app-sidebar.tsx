@@ -12,6 +12,9 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  CalendarPlus,
+  CalendarDays,
+  BookMarked,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -26,12 +29,16 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
+
+import { useAuth } from "@/context/AuthContext";
+import NavSidebarToggle from "@/components/nav-sidebar-component";
+
 // This is sample data.
 const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "/phlbw.jpg",
   },
   teams: [
     {
@@ -71,71 +78,6 @@ const data = {
         },
       ],
     },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
   ],
   projects: [
     {
@@ -156,15 +98,38 @@ const data = {
   ],
 }
 
+const sidebar = [
+  {
+    title: "Add event",
+    url: "/add-event",
+    icon: CalendarPlus,
+  },
+  {
+    title: "All events",
+    url: "/events",
+    icon: CalendarDays,
+  },
+  {
+    title: "My events",
+    url: "/my-events",
+    icon: BookMarked,
+  }
+]
+
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useAuth();
+  if (user) {
+    data.user.name = user.username;
+    data.user.email = user.email;
+  }
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <NavSidebarToggle />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={sidebar} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
