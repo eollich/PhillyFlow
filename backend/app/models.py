@@ -9,12 +9,81 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from flask import current_app
 
+import csv
+import io
+from datetime import datetime
 
 # prefferences
 # id
 # hobbies  (Thins you already do)
 # interests (things you would like to do)
 # backref to user
+
+class Incident(db.Model):
+    __tablename__ = 'incidents'
+    id = db.Column(db.Integer, primary_key=True)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    severity = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+
+    def __repr__(self):
+        return f"<Incident {self.id}: severity {self.severity} at ({self.latitude}, {self.longitude}) on {self.date}>"
+
+    @classmethod
+    def import_from_csv(cls, file_obj):
+
+        """
+        Import incidents from a CSV file.
+
+        The CSV file should have the following columns:
+          - latitude
+          - longitude
+          - severity
+          - date (in 'YYYY-MM-DD HH:MM:SS' or 'YYYY-MM-DD' format)
+
+        Args:
+            file_obj: A file-like object containing the CSV data.
+
+        Returns:
+            int: The number of incidents imported.
+        """
+        # Convert the binary file stream to a text stream.
+        stream = io.StringIO(file_obj.read().decode("utf-8"), newline=None)
+        reader = csv.DictReader(stream)
+
+        print("CSV Headers:", reader.fieldnames)
+
+
+        incidents = []
+        for row in reader:
+            try:
+                latitude = float(row['lat'])
+                longitude = float(row['lng'])
+                severity = int(row['crime_severity'])
+                date_str = row['dispatch_date'].strip()
+
+                # Try parsing the date as a full datetime first, then as a date-only.
+                try:
+                    date_val = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+                except ValueError:
+                    date_val = datetime.strptime(date_str, '%Y-%m-%d')
+            except Exception:
+                # Skip rows with missing or invalid data.
+                continue
+
+            incident = cls(
+                latitude=latitude,
+                longitude=longitude,
+                severity=severity,
+                date=date_val
+            )
+            incidents.append(incident)
+
+        db.session.bulk_save_objects(incidents)
+        db.session.commit()
+        return len(incidents)
+
 
 
 class User(UserMixin, db.Model):
