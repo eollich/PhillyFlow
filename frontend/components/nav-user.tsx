@@ -58,6 +58,14 @@ export function NavUser({
     }
   };
 
+  const gotoAccount = () => {
+    try {
+      router.push("/account");
+    } catch (error: any) {
+      toast.error("Error going to account page");
+    }
+  };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -100,7 +108,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={gotoAccount}>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>

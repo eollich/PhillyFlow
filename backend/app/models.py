@@ -4,14 +4,13 @@ from app import db, login
 from flask_login import UserMixin
 from datetime import datetime, timezone
 from time import time
-from typing import Optional
+from typing import Optional, List
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from flask import current_app
 
 import csv
 import io
-from datetime import datetime
 
 # prefferences
 # id
@@ -19,8 +18,64 @@ from datetime import datetime
 # interests (things you would like to do)
 # backref to user
 
+
+class Event(db.Model):
+    __tablename__ = "event"
+
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    name: so.Mapped[str] = so.mapped_column(sa.String(255), nullable=False)
+    address: so.Mapped[str] = so.mapped_column(sa.String(255), nullable=False)
+    latitude: so.Mapped[float] = so.mapped_column(nullable=False)
+    longitude: so.Mapped[float] = so.mapped_column(nullable=False)
+    capacity: so.Mapped[Optional[int]] = so.mapped_column(nullable=True)
+    current_registered: so.Mapped[int] = so.mapped_column(default=0)
+    description: so.Mapped[str] = so.mapped_column(sa.Text, nullable=False)
+    start_time: so.Mapped[datetime] = so.mapped_column(nullable=False)
+    end_time: so.Mapped[Optional[datetime]] = so.mapped_column(nullable=True)
+    created_at: so.Mapped[datetime] = so.mapped_column(
+        default=lambda: datetime.now(timezone.utc)
+    )
+
+    # creator one to many
+    creator_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey("user.id"), index=True)
+    creator: so.Mapped["User"] = so.relationship(back_populates="events_created")
+
+    # attendees many-to-many
+    attendees: so.Mapped[List["User"]] = so.relationship(
+        secondary="event_attendees", back_populates="events_attending"
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "address": self.address,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "capacity": self.capacity,
+            "current_registered": self.current_registered,
+            "description": self.description,
+            "start_time": self.start_time.isoformat(),
+            "end_time": self.end_time.isoformat() if self.end_time else None,
+            "creator_id": self.creator_id,
+        }
+
+    def __repr__(self):
+        return (
+            f"<Event {self.name} at {self.address}, hosted by {self.creator.username}>"
+        )
+
+
+# Association Table for Many-to-Many Relationship (Attendees)
+event_attendees = db.Table(
+    "event_attendees",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("event_id", db.Integer, db.ForeignKey("event.id"), primary_key=True),
+)
+
+
 class Incident(db.Model):
-    __tablename__ = 'incidents'
+    __tablename__ = "incidents"
     id = db.Column(db.Integer, primary_key=True)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
@@ -32,7 +87,6 @@ class Incident(db.Model):
 
     @classmethod
     def import_from_csv(cls, file_obj):
-
         """
         Import incidents from a CSV file.
 
@@ -54,29 +108,25 @@ class Incident(db.Model):
 
         print("CSV Headers:", reader.fieldnames)
 
-
         incidents = []
         for row in reader:
             try:
-                latitude = float(row['lat'])
-                longitude = float(row['lng'])
-                severity = int(row['crime_severity'])
-                date_str = row['dispatch_date'].strip()
+                latitude = float(row["lat"])
+                longitude = float(row["lng"])
+                severity = int(row["crime_severity"])
+                date_str = row["dispatch_date"].strip()
 
                 # Try parsing the date as a full datetime first, then as a date-only.
                 try:
-                    date_val = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+                    date_val = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
                 except ValueError:
-                    date_val = datetime.strptime(date_str, '%Y-%m-%d')
+                    date_val = datetime.strptime(date_str, "%Y-%m-%d")
             except Exception:
                 # Skip rows with missing or invalid data.
                 continue
 
             incident = cls(
-                latitude=latitude,
-                longitude=longitude,
-                severity=severity,
-                date=date_val
+                latitude=latitude, longitude=longitude, severity=severity, date=date_val
             )
             incidents.append(incident)
 
@@ -85,21 +135,29 @@ class Incident(db.Model):
         return len(incidents)
 
 
-
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(65), index=True, unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     password_reset_token_used = db.Column(db.Boolean, default=False)
-    # prefferences: so.WriteOnlyMapped["Perfs"] = so.relationship(
-    #    back_populates="author"
-    # )
+
+    events_created: so.Mapped[List["Event"]] = so.relationship(
+        back_populates="creator", cascade="all, delete-orphan"
+    )
+
+    events_attending: so.Mapped[List["Event"]] = so.relationship(
+        secondary="event_attendees", back_populates="attendees"
+    )
+
     about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140))
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc)
     )
-    # location
+
+    location: so.Mapped[Optional[str]] = so.mapped_column(sa.String(255))
+    latitude: so.Mapped[Optional[float]] = so.mapped_column()
+    longitude: so.Mapped[Optional[float]] = so.mapped_column()
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

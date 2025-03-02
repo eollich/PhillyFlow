@@ -1,6 +1,5 @@
 from app.main import bp
 from flask import request, jsonify
-import sqlalchemy as sa
 from app.models import Incident  # Your Incident model is already defined in models.py
 # from app.geocoding import geocode_address  # Function that calls the Google Geocoding API
 # from app.utils import haversine_distance
@@ -15,22 +14,23 @@ from app.main.utils import compute_safety_score
 def index():
     return "Welcome to the Incident API!"
 
-@bp.route('/populate', methods=['GET'])
+
+@bp.route("/populate", methods=["GET"])
 def populate():
     populateIncidents()
     return jsonify({"message": "Incidents populated"}), 200
 
-    
-@bp.route('/geocode', methods=['POST'])
+
+@bp.route("/geocode", methods=["POST"])
 def geocode():
     """
     Endpoint to geocode an address using a POST request.
-    
+
     Expects JSON payload:
       {
         "address": "Center City, Philadelphia"
       }
-    
+
     Returns:
       JSON with latitude and longitude.
     """
@@ -46,19 +46,18 @@ def geocode():
         return jsonify({"error": str(e)}), 500
 
 
-
-@bp.route('/incidents_by_coords', methods=['POST'])
+@bp.route("/incidents_by_coords", methods=["POST"])
 def incidents_by_coords():
     """
     Query incidents near given coordinates.
-    
+
     Expected JSON payload:
       {
           "lat": 39.9525839,
           "lng": -75.1652215,
           "radius": 1.0   # optional, default is 1 mile
       }
-      
+
     Returns:
       JSON object with a count of nearby incidents and a list of incidents, each with an additional "distance" attribute.
     """
@@ -67,14 +66,14 @@ def incidents_by_coords():
         return jsonify({"error": "Missing JSON payload"}), 400
 
     try:
-        lat = float(data.get('lat'))
-        lng = float(data.get('lng'))
+        lat = float(data.get("lat"))
+        lng = float(data.get("lng"))
     except (TypeError, ValueError):
         return jsonify({"error": "Invalid or missing 'lat' or 'lng' parameters."}), 400
 
     # Optional radius parameter (in miles); default to 1.0 mile if not provided.
     try:
-        radius = float(data.get('radius', 1.0))
+        radius = float(data.get("radius", 1.0))
     except (TypeError, ValueError):
         radius = 1.0
 
@@ -91,23 +90,19 @@ def incidents_by_coords():
                 "longitude": incident.longitude,
                 "severity": incident.severity,
                 "date": incident.date.isoformat(),
-                "distance": round(distance, 2)
+                "distance": round(distance, 2),
             }
             nearby_incidents.append(incident_data)
 
-    result = {
-        "count": len(nearby_incidents),
-        "incidents": nearby_incidents
-    }
+    result = {"count": len(nearby_incidents), "incidents": nearby_incidents}
     return jsonify(result), 200
 
 
-
-@bp.route('/area_safety', methods=['POST'])
+@bp.route("/area_safety", methods=["POST"])
 def area_safety():
     """
     Given an area string in the JSON payload, compute the safety score for that area.
-    
+
     Expected JSON payload:
       {
           "area": "Center City, Philadelphia",
@@ -133,19 +128,23 @@ def area_safety():
     all_incidents = Incident.query.all()
     nearby_incidents = []
     for incident in all_incidents:
-        distance = haversine_distance(center_lat, center_lng, incident.latitude, incident.longitude)
+        distance = haversine_distance(
+            center_lat, center_lng, incident.latitude, incident.longitude
+        )
         if distance <= radius:
             nearby_incidents.append(incident)
 
     # Compute the safety score using our helper function.
     safety = compute_safety_score(nearby_incidents)
-    
-    return jsonify({
-        "area": area,
-        "coordinates": {"lat": center_lat, "lng": center_lng},
-        "incident_count": len(nearby_incidents),
-        "safety_score": round(safety, 2)
-    }), 200
+
+    return jsonify(
+        {
+            "area": area,
+            "coordinates": {"lat": center_lat, "lng": center_lng},
+            "incident_count": len(nearby_incidents),
+            "safety_score": round(safety, 2),
+        }
+    ), 200
 
 
 # @bp.route('/danger', methods=['GET'])
@@ -193,5 +192,3 @@ def area_safety():
 #     }
 
 #     return jsonify(danger_score), 200
-
-

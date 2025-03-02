@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  // Add all available images
   const images = ["/phlbw.jpg", "/basketball.avif", "/soccer.jpg", "/hiking.jpeg"];
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 1000); // Change every 5 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [images.length]);
@@ -29,7 +28,6 @@ export default function Home() {
         }}
       ></div>
 
-      {/* Content */}
       <div className="relative z-10 text-center text-white p-6">
         <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">Philly Flow</h1>
         <p className="text-lg text-gray-200 mb-6 drop-shadow-lg">

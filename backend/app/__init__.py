@@ -44,6 +44,10 @@ def create_app(config_class=Config):
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
 
+    from app.events import bp as events_bp
+
+    app.register_blueprint(events_bp, url_prefix="/events")
+
     if not app.debug:
         # log file
         if not os.path.exists("logs"):
