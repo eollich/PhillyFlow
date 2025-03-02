@@ -2,35 +2,68 @@
 
 import { useEffect } from "react";
 import { useEvent } from "@/context/EventContext";
+import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { Plus, Pen, X } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const Events = () => {
-  const { events, loading, fetchEvents } = useEvent(); // ✅ Get loading state
+  const { events, loading, fetchEvents, joinEvent, leaveEvent } = useEvent();
+  const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     fetchEvents();
   }, []);
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Events</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-center">Events</h1>
 
-      {/* ✅ Proper loading handling */}
       {loading ? (
-        <p className="text-gray-500">Loading events...</p>
+        <p className="text-gray-500 text-center">Loading events...</p>
       ) : events.length === 0 ? (
-        <p className="text-gray-500">No events available.</p>
+        <div className="text-center text-gray-500">
+          <p>No events available.</p>
+          <Button onClick={() => router.push("/events/create")} className="mt-4">
+            <Plus className="mr-2" size={18} /> Add an Event
+          </Button>
+        </div>
       ) : (
-        <ul className="space-y-4">
+        <div className="grid gap-6">
           {events.map((event) => (
-            <li key={event.id} className="p-4 border rounded shadow">
-              <h2 className="text-lg font-semibold">{event.name}</h2>
-              <p className="text-sm text-gray-600">{event.address}</p>
-              <p className="text-sm text-gray-600">
-                {new Date(event.start_time).toLocaleString()}
-              </p>
-            </li>
+            <Card key={event.id} className="shadow-lg">
+              <CardContent className="p-6">
+                <h2 className="text-xl font-semibold">{event.name}</h2>
+                <p className="text-sm text-gray-500">Hosted by {event.creator_username}</p>
+                <p className="text-sm text-gray-600">{event.address}</p>
+                <p className="text-sm text-gray-600">
+                  {new Date(event.start_time).toLocaleString()}
+                </p>
+
+                <div className="mt-4 flex justify-end gap-3">
+                  {user && user.username === event.creator_username ? (
+                    <Button
+                      onClick={() => router.push(`/events/edit/${event.id}`)}
+                      variant="outline"
+                    >
+                      <Pen className="mr-2" size={16} /> Edit Event
+                    </Button>
+                  ) : event.is_attending ? (
+                    <Button onClick={() => leaveEvent(event.id)} variant="destructive">
+                      <X className="mr-2" size={16} /> Leave Event
+                    </Button>
+                  ) : (
+                    <Button onClick={() => joinEvent(event.id)} variant="outline">
+                      <Plus className="mr-2" size={16} /> Join Event
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

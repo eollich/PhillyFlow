@@ -1,24 +1,26 @@
-
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+
+
+export async function POST(req: NextRequest, { params }: { params: { eventId: string } }) {
 
     const cookieHeader = req.headers.get("cookie");
-
     if (!cookieHeader) {
         return NextResponse.json({ error: "No cookies found" }, { status: 400 });
     }
     try {
-        const body = await req.json();
+        const { eventId } = params;
 
-        const flaskResponse = await fetch("http://localhost:5858/events/create_event", {
+        if (!eventId) {
+            return NextResponse.json({ error: "Event ID is required" }, { status: 400 });
+        }
+
+        const flaskResponse = await fetch(`http://localhost:5858/events/join_event/${eventId}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 Cookie: cookieHeader || "",
             },
             credentials: "include",
-            body: JSON.stringify(body),
         });
 
         const responseBody = await flaskResponse.json();
@@ -32,9 +34,13 @@ export async function POST(req: NextRequest) {
             },
         });
 
+        const setCookie = flaskResponse.headers.get("Set-Cookie");
+        if (setCookie) {
+            nextResponse.headers.set("Set-Cookie", setCookie);
+        }
 
         return nextResponse;
     } catch (error) {
-        return NextResponse.json({ error: "Failed to create event" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to join event" }, { status: 500 });
     }
 }

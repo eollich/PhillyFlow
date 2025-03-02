@@ -11,16 +11,21 @@ interface Event {
   start_time: string;
   end_time?: string | null;
   creator_id: number;
+  creator_username?: string | null;
   capacity?: number;
   current_registered: number;
+  is_attending: boolean;
 }
 
 interface EventContextType {
   events: Event[];
+  myEvents: {};
   loading: boolean;
   fetchEvents: () => Promise<void>;
+  fetchMine: () => Promise<void>;
   createEvent: (eventData: Omit<Event, "id" | "current_registered">) => Promise<boolean>;
   joinEvent: (eventId: number) => Promise<boolean>;
+  leaveEvent: (eventId: number) => Promise<boolean>;
   editEvent: (eventId: number, updatedData: Partial<Event>) => Promise<boolean>;
   deleteEvent: (eventId: number) => Promise<boolean>;
 }
@@ -29,6 +34,7 @@ const EventContext = createContext<EventContextType | undefined>(undefined);
 
 export function EventProvider({ children }: { children: React.ReactNode }) {
   const [events, setEvents] = useState<any[]>([]);
+  const [myEvents, setMyEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch all events
@@ -53,10 +59,32 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // fetch only my events
+  const fetchMine = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/events/me", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setMyEvents(data || {});
+      } else {
+        toast.error("Failed to load my events");
+      }
+    } catch (error) {
+      toast.error("Network error while fetching my events");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Create an event
   const createEvent = async (eventData: Omit<Event, "id" | "current_registered">) => {
     try {
-      const res = await fetch("http://localhost:5858/create_event", {
+      const res = await fetch("/api/events/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -77,20 +105,22 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Join an event
   const joinEvent = async (eventId: number) => {
+    console.log(eventId);
     try {
-      const res = await fetch(`http://localhost:5858/join_event/${eventId}`, {
+      const res = await fetch(`/api/events/join/${eventId}`, {
         method: "POST",
         credentials: "include",
       });
+
+      const data = await res.json();
 
       if (res.ok) {
         toast.success("Successfully joined the event!");
         await fetchEvents();
         return true;
       } else {
-        toast.error("Failed to join the event");
+        toast.error(data.error || "Failed to join the event");
         return false;
       }
     } catch (error) {
@@ -99,10 +129,33 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Edit an event
+  const leaveEvent = async (eventId: number) => {
+    try {
+      const res = await fetch(`/api/events/leave/${eventId}`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        toast.success("You have left the event.");
+        await fetchEvents();
+        return true;
+      } else {
+        toast.error("Failed to leave the event.");
+        return false;
+      }
+    } catch (error) {
+      toast.error("Network error. Please try again.");
+      return false;
+    }
+  };
+
+
+
+
   const editEvent = async (eventId: number, updatedData: Partial<Event>) => {
     try {
-      const res = await fetch(`http://localhost:5858/edit_event/${eventId}`, {
+      const res = await fetch(`/api/events/edit/${eventId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -111,7 +164,7 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         toast.success("Event updated successfully!");
-        await fetchEvents();
+        await Promise.all([fetchEvents(), fetchMine()]);
         return true;
       } else {
         toast.error("Failed to update event");
@@ -126,14 +179,14 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
   // Delete an event
   const deleteEvent = async (eventId: number) => {
     try {
-      const res = await fetch(`http://localhost:5858/delete_event/${eventId}`, {
+      const res = await fetch(`/api/events/delete/${eventId}`, {
         method: "DELETE",
         credentials: "include",
       });
 
       if (res.ok) {
         toast.success("Event deleted successfully!");
-        await fetchEvents();
+        await Promise.all([fetchEvents(), fetchMine()]);
         return true;
       } else {
         toast.error("Failed to delete event");
@@ -151,7 +204,7 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
   //}, []);
 
   return (
-    <EventContext.Provider value={{ events, loading, fetchEvents, createEvent, joinEvent, editEvent, deleteEvent }}>
+    <EventContext.Provider value={{ events, myEvents, loading, fetchEvents, fetchMine, createEvent, joinEvent, leaveEvent, editEvent, deleteEvent }}>
       {children}
     </EventContext.Provider>
   );

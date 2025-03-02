@@ -1,29 +1,29 @@
-
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function DELETE(req: NextRequest, { params }: { params: { eventId: string } }) {
 
+    const { eventId } = params;
+
+    if (!eventId) {
+        return NextResponse.json({ error: "Event ID is required" }, { status: 400 });
+    }
     const cookieHeader = req.headers.get("cookie");
-
     if (!cookieHeader) {
         return NextResponse.json({ error: "No cookies found" }, { status: 400 });
     }
     try {
-        const body = await req.json();
-
-        const flaskResponse = await fetch("http://localhost:5858/events/create_event", {
-            method: "POST",
+        const flaskResponse = await fetch(`http://localhost:5858/events/delete_event/${eventId}`, {
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 Cookie: cookieHeader || "",
             },
             credentials: "include",
-            body: JSON.stringify(body),
         });
 
         const responseBody = await flaskResponse.json();
 
-        const nextResponse = new NextResponse(JSON.stringify(responseBody), {
+        return new NextResponse(JSON.stringify(responseBody), {
             status: flaskResponse.status,
             headers: {
                 "Content-Type": "application/json",
@@ -31,10 +31,7 @@ export async function POST(req: NextRequest) {
                 "Access-Control-Allow-Origin": "http://localhost:3000",
             },
         });
-
-
-        return nextResponse;
     } catch (error) {
-        return NextResponse.json({ error: "Failed to create event" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to delete event" }, { status: 500 });
     }
 }

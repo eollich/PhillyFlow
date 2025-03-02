@@ -1,74 +1,78 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useEvent } from "@/context/EventContext";
+import { useState } from "react";
 import { toast } from "sonner";
 
-interface EventFormValues {
-  name: string;
-  date: string;
-  time: string;
-  address: string;
-  capacity?: number;
-  description: string;
-}
+export function EventForm({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  const { createEvent } = useEvent();
 
-export function EventForm() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm<EventFormValues>();
-
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [address, setAddress] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
   const maxChars = 200;
-  const descriptionValue = watch("description", "");
 
-  const onSubmit = async (data: EventFormValues) => {
-    const startDateTime = `${data.date}T${data.time}:00`;
-
-    const eventData: Record<string, any> = {
-      name: data.name,
-      address: data.address,
-      description: data.description,
-      start_time: startDateTime,
-      end_time: null,
-      creator_id: 1, // TODO: Replace with actual user ID
-    };
-
-    if (data.capacity) {
-      eventData.capacity = data.capacity;
-    }
-
-    try {
-      const response = await fetch("http://localhost:5858/create_event", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(eventData),
-      });
-
-      const responseData = await response.json();
-      if (response.ok) {
-        toast.success("Event created successfully!");
-        reset(); // Reset form after successful submission
-      } else {
-        toast.error(responseData.error || "Failed to create event.");
-      }
-    } catch (error) {
-      toast.error("Network error. Please try again.");
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length <= maxChars) {
+      setDescription(e.target.value);
+    } else {
+      toast.error(`Description must be ${maxChars} characters or less.`);
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const startDateTime = `${date}T${time}:00`;
+
+    const eventData: Record<string, any> = {
+      name,
+      address,
+      description,
+      start_time: startDateTime,
+      end_time: null,
+    };
+
+    if (capacity.trim() !== "") {
+      eventData.capacity = parseInt(capacity, 10);
+    }
+
+    const success = await createEvent(eventData);
+
+    if (success) {
+      toast.success("Event created successfully!");
+      setName("");
+      setDate("");
+      setTime("");
+      setAddress("");
+      setCapacity("");
+      setDescription("");
+    } else {
+      toast.error("Failed to create event.");
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <div className="flex flex-col gap-6 max-w-lg mx-auto">
+    <div className={cn("flex flex-col gap-6 max-w-lg mx-auto", className)} {...props}>
       <Card className="overflow-hidden p-0 w-full">
         <CardContent className="p-6">
-          <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit(onSubmit)}>
+          <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit}>
             <div className="text-center">
               <h1 className="text-2xl font-bold">Create an Event</h1>
               <p className="text-muted-foreground text-sm">
@@ -76,63 +80,101 @@ export function EventForm() {
               </p>
             </div>
 
-            {/* Event Name */}
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="name">Event Name</Label>
-              <Input id="name" className="w-full" {...register("name", { required: "Event name is required" })} />
-              {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+              <Input
+                id="name"
+                type="text"
+                placeholder="Event Name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={loading}
+              />
             </div>
 
-            {/* Date */}
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="date">Date</Label>
-              <Input id="date" type="date" className="w-full" {...register("date", { required: "Date is required" })} />
-              {errors.date && <p className="text-red-500 text-sm">{errors.date.message}</p>}
+              <Input
+                id="date"
+                type="date"
+                required
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                disabled={loading}
+              />
             </div>
 
-            {/* Time */}
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="time">Time</Label>
-              <Input id="time" type="time" className="w-full" {...register("time", { required: "Time is required" })} />
-              {errors.time && <p className="text-red-500 text-sm">{errors.time.message}</p>}
+              <Input
+                id="time"
+                type="time"
+                required
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                disabled={loading}
+              />
             </div>
 
-            {/* Address */}
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="address">Address</Label>
-              <Input id="address" className="w-full" {...register("address", { required: "Address is required" })} />
-              {errors.address && <p className="text-red-500 text-sm">{errors.address.message}</p>}
+              <Input
+                id="address"
+                type="text"
+                placeholder="Event Address"
+                required
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                disabled={loading}
+              />
             </div>
 
-            {/* Capacity (Optional) */}
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="capacity">Capacity (Optional)</Label>
-              <Input id="capacity" type="number" className="w-full" {...register("capacity")} placeholder="Leave empty for unlimited" />
+              <Input
+                id="capacity"
+                type="number"
+                placeholder="Leave empty for unlimited"
+                value={capacity}
+                onChange={(e) => setCapacity(e.target.value)}
+                disabled={loading}
+              />
             </div>
 
-            {/* Description */}
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="description">Description (Max {maxChars} characters)</Label>
               <Textarea
                 id="description"
+                placeholder="Event description..."
                 rows={3}
-                {...register("description", {
-                  required: "Description is required",
-                  maxLength: { value: maxChars, message: `Max ${maxChars} characters` },
-                })}
-                className="w-full resize-none overflow-y-auto max-h-32 border border-gray-300 focus:border-gray-500 rounded-md"
+                required
+                value={description}
+                onChange={handleDescriptionChange}
+                disabled={loading}
+                className="resize-none"
               />
-              <p className="text-right text-sm text-gray-500">{descriptionValue.length}/{maxChars} characters</p>
-              {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+              <p className="text-right text-sm text-gray-500">
+                {description.length}/{maxChars} characters
+              </p>
             </div>
 
-            {/* Submit Button */}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Creating..." : "Create Event"}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading ? "Creating..." : "Create Event"}
             </Button>
           </form>
         </CardContent>
       </Card>
+
+      {/* Terms and Privacy */}
+      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+        and <a href="#">Privacy Policy</a>.
+      </div>
     </div>
   );
 }
