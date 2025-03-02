@@ -45,7 +45,7 @@ class Event(db.Model):
         secondary="event_attendees", back_populates="events_attending"
     )
 
-    def to_dict(self):
+    def to_dict(self, user_id=None):
         return {
             "id": self.id,
             "name": self.name,
@@ -58,6 +58,10 @@ class Event(db.Model):
             "start_time": self.start_time.isoformat(),
             "end_time": self.end_time.isoformat() if self.end_time else None,
             "creator_id": self.creator_id,
+            "creator_username": self.creator.username if self.creator else None,
+            "is_attending": user_id in [user.id for user in self.attendees]
+            if user_id
+            else False,
         }
 
     def __repr__(self):
