@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface AuthContextType {
   user: any | null;
@@ -8,6 +9,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   register: (email: string, username: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
+  updateLocation: (location: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -113,8 +115,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function updateLocation(location: string): Promise<boolean> {
+    try {
+      const res = await fetch("/api/auth/update-location", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ location }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        toast.error(errorData.error || "Failed to update location.");
+        return false;
+      }
+
+      const data = await res.json();
+      toast.success("Location updated successfully!");
+
+      // Update user state with new location
+      setUser((prevUser) => (prevUser ? { ...prevUser, location: data.location } : prevUser));
+
+      return true;
+    } catch (error) {
+      console.error("Error updating location:", error);
+      toast.error("Network error. Please try again.");
+      return false;
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, updateLocation }}>
       {children}
     </AuthContext.Provider>
   );

@@ -17,10 +17,19 @@ interface Event {
   is_attending: boolean;
 }
 
+interface SafeLocation {
+  name: string;
+  latitude: number;
+  longitude: number;
+  safety_score: number;
+}
+
 interface EventContextType {
   events: Event[];
   myEvents: {};
   loading: boolean;
+  safeLocations: SafeLocation[];
+  fetchSafeLocations: () => Promise<void>;
   fetchEvents: () => Promise<void>;
   fetchMine: () => Promise<void>;
   createEvent: (eventData: Omit<Event, "id" | "current_registered">) => Promise<boolean>;
@@ -30,12 +39,32 @@ interface EventContextType {
   deleteEvent: (eventId: number) => Promise<boolean>;
 }
 
+
 const EventContext = createContext<EventContextType | undefined>(undefined);
 
 export function EventProvider({ children }: { children: React.ReactNode }) {
   const [events, setEvents] = useState<any[]>([]);
   const [myEvents, setMyEvents] = useState<any[]>([]);
+  const [safeLocations, setSafeLocations] = useState<SafeLocation[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const fetchSafeLocations = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/events/safe", { method: "GET", credentials: "include" });
+
+      if (res.ok) {
+        const data = await res.json();
+        setSafeLocations(data.courts || []);
+      } else {
+        toast.error("Failed to fetch safe locations.");
+      }
+    } catch (error) {
+      toast.error("Network error while fetching safe locations.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Fetch all events
   const fetchEvents = async () => {
@@ -139,6 +168,7 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
       if (res.ok) {
         toast.success("You have left the event.");
         await fetchEvents();
+        await fetchMine();
         return true;
       } else {
         toast.error("Failed to leave the event.");
@@ -204,7 +234,7 @@ export function EventProvider({ children }: { children: React.ReactNode }) {
   //}, []);
 
   return (
-    <EventContext.Provider value={{ events, myEvents, loading, fetchEvents, fetchMine, createEvent, joinEvent, leaveEvent, editEvent, deleteEvent }}>
+    <EventContext.Provider value={{ events, myEvents, loading, safeLocations, fetchSafeLocations, fetchEvents, fetchMine, createEvent, joinEvent, leaveEvent, editEvent, deleteEvent }}>
       {children}
     </EventContext.Provider>
   );

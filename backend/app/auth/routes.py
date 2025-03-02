@@ -4,6 +4,7 @@ import sqlalchemy as sa
 from app import db
 from app.auth import bp
 from app.models import User
+from app.main.geocoding import geocode_address
 
 
 @bp.route("/login", methods=["POST"])
@@ -87,7 +88,43 @@ def get_user_info():
             {
                 "username": current_user.username,
                 "email": current_user.email,
+                "location": current_user.location,
             }
         ), 200
-    except:
+    except Exception as _:
         return jsonify({"message": "Unexpected error"}), 500
+
+
+@bp.route("/update_location", methods=["PUT"])
+def update_location():
+    if not current_user.is_authenticated:
+        return jsonify({"message": "Not logged in"}), 401
+    try:
+        data = request.get_json()
+        new_location = data.get("location")
+
+        if not new_location:
+            return jsonify({"error": "Location cannot be empty"}), 400
+
+        lat = 0
+        lng = 0
+        try:
+            coords = geocode_address(new_location)
+            lat = coords["lat"]
+            lng = coords["lng"]
+
+        except Exception as _:
+            return jsonify({"error": "Location not found"}), 400
+
+        current_user.location = new_location
+        current_user.latitude = float(lat)
+        current_user.longitude = float(lng)
+
+        db.session.commit()
+
+        return jsonify(
+            {"message": "Location updated successfully", "location": new_location}
+        ), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

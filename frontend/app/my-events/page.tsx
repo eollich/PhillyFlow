@@ -46,9 +46,12 @@ const MyEvents = () => {
                   <Card key={event.id} className="shadow-lg">
                     <CardContent className="p-6">
                       <h2 className="text-lg font-semibold">{event.name}</h2>
-                      <p className="text-sm text-gray-600">{event.address}</p>
+                      <p className="text-sm text-gray-500">{event.address}</p>
                       <p className="text-sm text-gray-600">
                         {new Date(event.start_time).toLocaleString()}
+                      </p>
+                      <p className="text-sm text-gray-700 mt-2 italic">
+                        {event.description || "No description available."}
                       </p>
                       <div className="mt-4 flex justify-end">
                         <EditEventSheet event={event} />
@@ -69,15 +72,15 @@ const MyEvents = () => {
                   <Card key={event.id} className="shadow-lg">
                     <CardContent className="p-6">
                       <h2 className="text-lg font-semibold">{event.name}</h2>
-                      <p className="text-sm text-gray-600">{event.address}</p>
+                      <p className="text-sm text-gray-500">{event.address}</p>
                       <p className="text-sm text-gray-600">
                         {new Date(event.start_time).toLocaleString()}
                       </p>
+                      <p className="text-sm text-gray-700 mt-2 italic">
+                        {event.description || "No description available."}
+                      </p>
                       <div className="mt-4 flex justify-end">
-                        <Button
-                          onClick={() => leaveEvent(event.id)}
-                          variant="destructive"
-                        >
+                        <Button onClick={() => leaveEvent(event.id)} variant="destructive">
                           <X className="mr-2" size={16} /> Leave Event
                         </Button>
                       </div>

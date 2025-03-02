@@ -4,7 +4,7 @@ from flask import jsonify, request
 from app import db
 import sqlalchemy as sa
 from flask_login import current_user
-from app.main.test_geocoding import geocode_address
+from app.main.geocoding import geocode_address
 from datetime import datetime
 
 

@@ -5,11 +5,23 @@ import { useEvent } from "@/context/EventContext";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Plus, Pen, X } from "lucide-react";
+import { Plus, X, Trash2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { EditEventSheet } from "@/components/edit-event-sheet";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 
 const Events = () => {
-  const { events, loading, fetchEvents, joinEvent, leaveEvent } = useEvent();
+  const { events, loading, fetchEvents, joinEvent, leaveEvent, deleteEvent } = useEvent();
   const { user } = useAuth();
   const router = useRouter();
 
@@ -41,15 +53,43 @@ const Events = () => {
                 <p className="text-sm text-gray-600">
                   {new Date(event.start_time).toLocaleString()}
                 </p>
+                <p className="text-sm text-gray-700 mt-2 italic">
+                  {event.description || "No description available."}
+                </p>
 
                 <div className="mt-4 flex justify-end gap-3">
                   {user && user.username === event.creator_username ? (
-                    <Button
-                      onClick={() => router.push(`/events/edit/${event.id}`)}
-                      variant="outline"
-                    >
-                      <Pen className="mr-2" size={16} /> Edit Event
-                    </Button>
+                    <>
+                      {/* Edit Event Sheet */}
+                      <EditEventSheet event={event} />
+
+                      {/* Delete Confirmation Dialog */}
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="destructive">
+                            <Trash2 className="mr-2" size={16} /> Delete
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. Deleting this event will remove all
+                              associated data permanently.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => deleteEvent(event.id)}
+                              className="bg-red-500 text-white"
+                            >
+                              Confirm Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </>
                   ) : event.is_attending ? (
                     <Button onClick={() => leaveEvent(event.id)} variant="destructive">
                       <X className="mr-2" size={16} /> Leave Event
