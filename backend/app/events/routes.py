@@ -155,3 +155,67 @@ def leave_event(event_id):
         return jsonify({"error": "Not attending this event"}), 400
 
     return jsonify({"message": "Successfully left the event"}), 200
+
+
+@bp.route("/edit_event/<int:event_id>", methods=["PUT"])
+def edit_event(event_id):
+    if not current_user.is_authenticated:
+        return jsonify({"message": "Not logged in"}), 401
+
+    event = db.session.get(Event, event_id)
+
+    if not event:
+        return jsonify({"error": "Event not found"}), 404
+
+    if event.creator_id != current_user.id:
+        return jsonify({"error": "You do not have permission to edit this event"}), 403
+
+    data = request.get_json()
+
+    try:
+        event.name = data.get("name", event.name)
+        event.address = data.get("address", event.address)
+        event.description = data.get("description", event.description)
+        event.start_time = (
+            datetime.fromisoformat(data.get("start_time"))
+            if data.get("start_time")
+            else event.start_time
+        )
+        event.end_time = (
+            datetime.fromisoformat(data.get("end_time"))
+            if data.get("end_time")
+            else event.end_time
+        )
+        event.capacity = (
+            int(data.get("capacity")) if data.get("capacity") else event.capacity
+        )
+
+        db.session.commit()
+        return jsonify(
+            {"message": "Event updated successfully", "event": event.to_dict()}
+        ), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@bp.route("/delete_event/<int:event_id>", methods=["DELETE"])
+def delete_event(event_id):
+    if not current_user.is_authenticated:
+        return jsonify({"message": "Not logged in"}), 401
+    try:
+        event = db.session.get(Event, event_id)
+
+        if not event:
+            return jsonify({"error": "Event not found"}), 404
+
+        if event.creator_id != current_user.id:
+            return jsonify({"error": "Unauthorized"}), 403
+
+        db.session.delete(event)
+        db.session.commit()
+
+        return jsonify({"message": "Event deleted successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
