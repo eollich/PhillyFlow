@@ -4,23 +4,55 @@ import plotly.express as px
 import pandas as pd
 
 # Load the dataset
-file_path = "//wsl.localhost/Ubuntu/home/nguyensteven/PhillyFlow/crime_2025.csv"
+file_path = "combined_crime_data.csv"
 df = pd.read_csv(file_path)
 
-# Convert dispatch_date and dispatch_time to datetime format
+# Convert dispatch_date to datetime format
 df["dispatch_date"] = pd.to_datetime(df["dispatch_date"])
-df["dispatch_time"] = pd.to_datetime(df["dispatch_time"], format="%H:%M:%S").dt.time
 
-# Ensure crime_severity column exists
-severity_mapping = {
-    "Homicide": 10, "Rape": 9, "Aggravated Assault Firearm": 8,
-    "Aggravated Assault No Firearm": 7, "Robbery Firearm": 7,
-    "Robbery No Firearm": 6, "Burglary Residential": 6,
-    "Burglary Non-Residential": 5, "Other Assaults": 5,
-    "Theft": 4, "Fraud": 3, "Vandalism": 3,
-    "Drug Violation": 2, "Disorderly Conduct": 2,
-    "Public Intoxication": 1
-}
+# List of columns where you want to remove nulls (excluding 'hour')
+columns_with_nulls = ['the_geom', 'the_geom_webmercator', 'point_x', 'point_y', 'lat', 'lng']
+
+# Drop rows where any of the specified columns have null values
+df = df.dropna(subset=columns_with_nulls)
+
+# Attempt to convert dispatch_time to datetime format and safely extract the hour
+try:
+    df['dispatch_time'] = pd.to_datetime(df['dispatch_time'], format='%H:%M:%S', errors='coerce')
+    df['hour'] = df['dispatch_time'].dt.hour  # Extracting hour for easier filtering
+except Exception as e:
+    print(f"Error converting time: {e}")
+
+# If 'hour' has NaNs due to conversion issues, handle or fill them
+df['hour'] = df['hour'].fillna(-1)  # Example handling strategy, replace with appropriate method
+
+unique_crimes = df["text_general_code"].unique()
+
+severity_mapping = {}
+
+for crime in unique_crimes:
+    if "Homicide" in crime:
+        severity_mapping[crime] = 10
+    elif "Rape" in crime:
+        severity_mapping[crime] = 9
+    elif "Aggravated Assault" in crime:
+        severity_mapping[crime] = 8 if "Firearm" in crime else 7
+    elif "Robbery" in crime:
+        severity_mapping[crime] = 7 if "Firearm" in crime else 6
+    elif "Burglary" in crime:
+        severity_mapping[crime] = 6 if "Residential" in crime else 5
+    elif "Other Assaults" in crime:
+        severity_mapping[crime] = 5  # Moderate severity for non-aggravated assaults
+    elif "Theft" in crime:
+        severity_mapping[crime] = 4
+    elif "Fraud" in crime or "Vandalism" in crime:
+        severity_mapping[crime] = 3
+    elif "Drug" in crime or "Disorderly Conduct" in crime:
+        severity_mapping[crime] = 2
+    elif "Public Intoxication" in crime:
+        severity_mapping[crime] = 1
+    else:
+        severity_mapping[crime] = 3  # Assign a neutral severity for unclassified crimes
 
 # Apply severity mapping and print debug info
 df["crime_severity"] = df["text_general_code"].map(severity_mapping)
@@ -99,3 +131,6 @@ def update_map(start_date, end_date, time_range):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+# based on location
+
