@@ -11,7 +11,7 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
   const pathname = usePathname();
 
   // Define guest-only pages.
-  const guestPages = ["/login", "/register", "/forgot-password"];
+  const guestPages = ["/login", "/register", "/forgot-password", "/"];
   // Define protected pages without "/" so we don't match every route.
   const protectedPages = ["/dashboard", "/ws"];
 
@@ -22,11 +22,10 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
     if (!loading) {
       setIsAuthPage(guestPages.includes(pathname));
 
-      // Check if the current route is protected.
-      // Using pathname === page or pathname.startsWith(page + "/") helps avoid matching every route.
       const isProtected = protectedPages.some(
         (page) => pathname === page || pathname.startsWith(page + "/")
       );
+      console.log(pathname);
 
       if (!user && isProtected) {
         router.push("/login");
