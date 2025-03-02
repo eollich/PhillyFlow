@@ -5,6 +5,7 @@ import AuthWrapper from "@/components/auth/AuthWrapper";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { EventProvider } from "@/context/EventContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +41,9 @@ export default function RootLayout({
         >
           <AuthProvider>
             <AuthWrapper>
-
-              {children}
+              <EventProvider>
+                {children}
+              </EventProvider>
             </AuthWrapper>
           </AuthProvider>
         </ThemeProvider>

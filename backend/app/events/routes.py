@@ -3,21 +3,22 @@ from app.models import Event
 from flask import jsonify, request
 from app import db
 import sqlalchemy as sa
-from flask_login import login_required
+from flask_login import current_user
 
 
 @bp.route("/")
 def all_events():
+    if not current_user.is_authenticated:
+        return jsonify({"message": "Not logged in"}), 401
     events = db.session.scalars(sa.select(Event)).all()
     return jsonify([event.to_dict() for event in events])
 
 
-@login_required
 @bp.route("/create_event", methods=["POST"])
 def create_event():
+    if not current_user.is_authenticated:
+        return jsonify({"message": "Not logged in"}), 401
     data = request.get_json()
-
-    # Validate required fields
     required_fields = [
         "name",
         "address",
